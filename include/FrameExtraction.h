@@ -13,7 +13,10 @@
 #include <vector>
 
 namespace WNGJIA001 {
-    // Methods
+    // variables
+    extern int img_width;
+    extern int img_height;
+    // methods
     void extractFrames();
 }
 

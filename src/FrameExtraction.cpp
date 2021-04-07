@@ -15,11 +15,12 @@
 #include "CmdLineParser.h"
 
 namespace WNGJIA001 {
+    int img_width;
+    int img_height;
     void extractFrames() {
-        int img_width;
-        int img_height;
-        char *img_arr;
-        char *frm_arr;
+        // extract frames with given parameters (from CmdLineParser) and generate output pgm files
+        char *img_arr; // pointer to char array which stores binary data from original pgm file
+        char *frm_arr; // pointer to char array which stores data of each frame imageSequence[i] from the frameSequence class 
         // open and read pgm file
         std::ifstream input_file(pgm_filename, std::ios::binary);
         if (input_file) {
@@ -34,18 +35,16 @@ namespace WNGJIA001 {
                     line_ss >> img_width >> std::ws >> img_height >> std::ws;
                 }
             }
-
+            // read the binary data of the input pgm file
             img_arr = new char[img_width*img_height];
             input_file.read(img_arr, img_width*img_height);
-            // inArr = reinterpret_cast<unsigned char *>(imgArr)
-            // std::cout << "First pixel has the value of " << unsigned(img_arr[0]) << std::endl;
 
             // extract frame sequence
             FrameSequence frameSequence;
             frameSequence.setFrameSize(width, height);
             frameSequence.extractFrames(img_arr);
 
-            // clean up memory of image array after frame extraction
+            // clean up memory memory for the input PGM image after frame extraction
             delete [] img_arr;
 
             // write output pgm files for each w operation
@@ -53,11 +52,13 @@ namespace WNGJIA001 {
                 std::string w_op = w_ops[w_i];
                 std::string w_name = w_names[w_i];
                 for (int i = 0; i < frameSequence.getFrameCount(); ++i) {
+                    // loop through each frame and apply the operation
                     frm_arr = new char[width*height];
                     // fill frm_arr
                     for (int row = 0; row < height; ++row) {
                         for (int col = 0; col < width; ++col) {
                             int pos = row*width + col;
+                            // IF STATEMENT FOR W_OP HERE!!!!!!!!!!!!!!!!!!!!!!
                             frm_arr[pos] = frameSequence.getPixel(i, row, col);
                         }
                     }
@@ -66,10 +67,10 @@ namespace WNGJIA001 {
                     code_ss << std::setfill('0') << std::setw(4) << i;
                     std::string output_filename = "bin/" + w_name + "-" + code_ss.str() + ".pgm";
                     std::ofstream output_file(output_filename, std::ios_base::binary);
-                    output_file << "P5\n" << img_width << " " << img_height << "\n" <<  "255\n"; 
+                    output_file << "P5\n" << width << " " << height << "\n" <<  "255\n"; 
                     output_file.write(frm_arr, width*height);
                     output_file.close();
-                    // clean up memory of frame array
+                    // clean up memory of each frame array pointer
                     delete [] frm_arr;
                 }
             }
