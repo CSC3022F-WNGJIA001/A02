@@ -103,20 +103,22 @@ namespace WNGJIA001 {
                     } 
                     if (isNumber(argv[i+1])) { // parse p_n
                         p_n = std::stoi(argv[++i]);
-                        if ((argc - i) < 2*p_n+1) { // require 2*p_n params follow -p flag
-                            std::cerr << "ERROR: Insufficient Number of -p Parameters" << std::endl;
+                        int coord_n = 2*p_n;
+                        if ((argc - i) < (coord_n+1)) { // require 2*p_n params follow -p flag
+                            std::cerr << "ERROR: Incorrect Format of -p Flags" << std::endl;
                             exit(1);
                         }
-                        for (int j = 0; j < 2*p_n; ++j) { // check if following 4 args are ints
+                        for (int j = 0; j < coord_n; ++j) { // check if following 2*p_n args are ints
                             if (isNumber(argv[i+1])) {
-                                p_coords.push_back(std::stoi(argv[++i])); // it is assumed that always x_start < x_end & y_start < y_end
+                                int p_coord = std::stoi(argv[++i]);
+                                p_coords.push_back(p_coord); // it is assumed that always x_start < x_end & y_start < y_end
                             } else {
-                                std::cerr << "ERROR: Incorrect Format of -p Flags." << std::endl;
+                                std::cerr << "ERROR: Incorrect Format of -p Flags" << std::endl;
                                 exit(1);
                             }
                         }       
                     } else {
-                        std::cerr << "ERROR: Incorrect Format of -p Flags." << std::endl;
+                        std::cerr << "ERROR: Incorrect Format of -p Flags" << std::endl;
                         exit(1);
                     }
                 } else {
@@ -133,14 +135,17 @@ namespace WNGJIA001 {
     }
 
     bool isNumber(const std::string& s) {
+        // check if the parsed string can be converted to int 
         return !s.empty() && std::find_if(s.begin(), s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
     }
 
     bool validOperation(const char* s) {
+        // check if the parsed string is a valid operation
         return !std::strcmp(s, "none") || !std::strcmp(s, "invert") || !std::strcmp(s, "reverse") || !std::strcmp(s, "revinvert");
     }
 
     bool missingFlag() {
+        // check if any of the necessary flags missing
         return (t_coords.empty() && p_coords.empty()) || (width == 0 || height == 0) || (w_ops.empty() || w_names.empty());
     }
 }
