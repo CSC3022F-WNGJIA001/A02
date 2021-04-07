@@ -73,7 +73,7 @@ namespace WNGJIA001 {
                 // increment frame count and y
                 frm_count += 1;
                 }
-            } else if (std::fabs(g) < 1.0) {
+            } else if (std::fabs(g) <= 1.0) {
                 // use x loop variable, to find y
                 float y = y_start;
                 for (int x = x_start; x <= x_end; ++x) {
