@@ -65,15 +65,15 @@ namespace WNGJIA001 {
                     if (!t_coords.empty()) { // multiple -t flags
                         std::cerr << "ERROR: Multiple Declaration of -t Flags" << std::endl;
                         exit(1);
-                    } else if ((argc - i) < 4) { // less than 4 params follow -t
-                        std::cerr << "ERROR: Insufficient Number of -t Parameters" << std::endl;
+                    } else if ((argc - i) < 5) { // require 4 params follow -t
+                        std::cerr << "ERROR: Incorrect Format of -t Flags" << std::endl;
                         exit(1);
                     } else { // parse -t coords
                         for (int j = 0; j < 4; ++j) { // check if following 4 args are ints
                             if (isNumber(argv[i+1])) {
                                 t_coords.push_back(std::stoi(argv[++i])); // it is assumed that always x_start < x_end & y_start < y_end
                             } else {
-                                std::cerr << "ERROR: Incorrect Format of -t Flags." << std::endl;
+                                std::cerr << "ERROR: Incorrect Format of -t Flags" << std::endl;
                                 exit(1);
                             }
                         }    
@@ -82,10 +82,7 @@ namespace WNGJIA001 {
                     if (width != 0 || height != 0) { // if width and height alrready assigned: multiple -s flags
                         std::cerr << "ERROR: Multiple Declaration of -s Flags" << std::endl;
                         exit(1);
-                    } else if ((argc - i) < 2) { // less than 2 params follow -s: error
-                        std::cerr << "ERROR: Insufficient Number of -s Parameters" << std::endl;
-                        exit(1);
-                    } else if (!isNumber(argv[i+1]) || !isNumber(argv[i+2])) { // if any pram not int: error
+                    } else if ((argc - i) < 3 || !isNumber(argv[i+1]) || !isNumber(argv[i+2])) { // if any pram not int: error
                         std::cerr << "ERROR: Incorrect Format of -s Flags." << std::endl;
                         exit(1);
                     } else { // parse -s flags
@@ -93,8 +90,8 @@ namespace WNGJIA001 {
                         height = std::stoi(argv[++i]);                        
                     }
                 } else if (!std::strcmp(argv[i], "-w")) {
-                    if ((argc - i) < 2) { // less than 2 params follow -w: error
-                        std::cerr << "ERROR: Insufficient Number of -w Parameters" << std::endl;
+                    if ((argc - i) < 3) { // require 2 params follow -w
+                        std::cerr << "ERROR: Incorrect Format of -w Flags" << std::endl;
                         exit(1);
                     } else if (!validOperation(argv[i+1])) { // not a valid operation flag: error
                         std::cerr << "ERROR: Invalid -w Operation Flag" << std::endl;
@@ -110,7 +107,7 @@ namespace WNGJIA001 {
                     } 
                     if (isNumber(argv[i+1])) { // parse p_n
                         p_n = std::stoi(argv[++i]);
-                        if ((argc - i) < 2*p_n) { // less than 2 params follow -w: error
+                        if ((argc - i) < 2*p_n+1) { // require 2*p_n params follow -p flag
                             std::cerr << "ERROR: Insufficient Number of -p Parameters" << std::endl;
                             exit(1);
                         }
