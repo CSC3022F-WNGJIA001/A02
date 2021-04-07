@@ -58,8 +58,19 @@ namespace WNGJIA001 {
                     for (int row = 0; row < height; ++row) {
                         for (int col = 0; col < width; ++col) {
                             int pos = row*width + col;
-                            // IF STATEMENT FOR W_OP HERE!!!!!!!!!!!!!!!!!!!!!!
-                            frm_arr[pos] = frameSequence.getPixel(i, row, col);
+                            if (w_op == "none") {
+                                frm_arr[pos] = frameSequence.getPixel(i, row, col);
+                            } else if (w_op == "invert") {
+                                unsigned char a = 255;
+                                frm_arr[pos] = a - frameSequence.getPixel(i, row, col);
+                            } else if (w_op == "reverse") {
+                                pos = (width*height-1) - pos;
+                                frm_arr[pos] = frameSequence.getPixel(i, row, col);
+                            } else if (w_op == "revinvert") {
+                                pos = (width*height-1) - pos;
+                                unsigned char a = 255;
+                                frm_arr[pos] = a - frameSequence.getPixel(i, row, col);
+                            } 
                         }
                     }
                     // write to output file
