@@ -11,10 +11,6 @@
 
 namespace WNGJIA001 {
     std::string pgm_filename;
-    int x_start = 0;
-    int x_end = 0;
-    int y_start = 0;
-    int y_end = 0;
     std::vector<int> t_coords;
     int width = 0;
     int height = 0;
