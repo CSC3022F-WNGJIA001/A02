@@ -21,5 +21,5 @@ $(BINDIR)%.o: $(SRCDIR)%.cpp
 
 # remove all the object binary files and executable file
 clean:
-	$(rm) $(BINDIR)*.o $(BINDIR)*.pgm
+	$(rm) $(BINDIR)*.o $(BINDIR)*.pgm $(BINDIR)*.mp4
 	$(rm) $(BUILDDIR)extractor
