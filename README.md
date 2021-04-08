@@ -17,6 +17,7 @@ to generate the vector of frame sequence; The function then writes each frame as
 
 ### Extractor.cpp
 Contains main function that calls functions from other source files 
+
 ----------------------------------------------------------------------------------------------
 ## Code Structure
 Extractor.cpp calls functions from CmdLineParser.cpp and FrameExtraction.cpp which parses the command line 
@@ -30,6 +31,7 @@ After frame extraction, dynamically allocated 2D image frames stored in the vect
 ### Mastery Work
 Poly-line trajectory has been implemented; 
 Deceleration/acceleration function was not implemented.
+
 ----------------------------------------------------------------------------------------------
 ## Makefile
 
@@ -43,6 +45,7 @@ $ make
 ```
 Compiles source files and store object files as bin/%.o; Links object files and store the executable 
 file as build/extractor 
+
 ----------------------------------------------------------------------------------------------
 ## Run the extractor
 ### Example
@@ -78,6 +81,7 @@ $ -p <int n> <int(1)> <int(2)> ... <int(2*n)>
 ```
 Specifies n x1 y1 x2 y2 ... xn yn (begin & end origin pixel coordinates, for poly-line frame trajectory); 
 Only one -p flag should be specified and this flag will override -t flag 
+
 ----------------------------------------------------------------------------------------------
 ## Generate Video
 ### Example
@@ -86,9 +90,11 @@ $ ffmpeg -r 25 -s 800x400 -i bin/sequence-%04d.pgm -vcodec libx264 -pix_fmt yuv4
 ```
 The above example will convert the pgm files of output frames named with the format sequence-%04d.pgm into 
 a short video named output.mp4 
+
 ----------------------------------------------------------------------------------------------
-## PS
+## PS:
 When I first submitted the compressed folder of this assignment, I discovered that the compressed folder 
 was surprisingly large, approximately 40MB, this is because I regrettably git add'ed the large sample images 
-causing the .git file to be huge 🥲. Unforfortunately I could not reduce it even though I did git rm the images. 
-Sorry for any inconvenience caused 😟.
+causing the .git file to be huge. 🥲 Unforfortunately I could not reduce it even though I did git rm the images.
+
+😟 Sorry for any inconvenience caused. 
