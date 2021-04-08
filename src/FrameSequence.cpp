@@ -17,7 +17,7 @@ namespace WNGJIA001 {
         frm_count = 0;
     }
 
-    void FrameSequence::setFrameSize(int width, int height) { 
+    void FrameSequence::setFrameSize(int width, int height) {
         frm_width = width;
         frm_height = height;
     }
@@ -47,7 +47,7 @@ namespace WNGJIA001 {
                 for (int i = 0; i < frm_height; ++i) {
                     frm_ptr[i] = new unsigned char[frm_width];
                     for (int j = 0; j < frm_width; ++j) {
-                        int pos = ((x+i)*img_width)+(y+j); 
+                        int pos = ((x+i)*img_width)+(y+j);
                         frm_ptr[i][j] = unsigned(img_arr[pos]);
                     }
                 }
@@ -65,7 +65,7 @@ namespace WNGJIA001 {
                     for (int i = 0; i < frm_height; ++i) {
                         frm_ptr[i] = new unsigned char[frm_width];
                         for (int j = 0; j < frm_width; ++j) {
-                            int pos = ((x+i)*img_width)+(y+j); 
+                            int pos = ((x+i)*img_width)+(y+j);
                             frm_ptr[i][j] = unsigned(img_arr[pos]);
                         }
                     }
@@ -81,7 +81,7 @@ namespace WNGJIA001 {
                     for (int i = 0; i < frm_height; ++i) {
                         frm_ptr[i] = new unsigned char[frm_width];
                         for (int j = 0; j < frm_width; ++j) {
-                            int pos = (x+i)*img_width+(round(y)+j); 
+                            int pos = (x+i)*img_width+(round(y)+j);
                             frm_ptr[i][j] = unsigned(img_arr[pos]);
                         }
                     }
@@ -98,7 +98,7 @@ namespace WNGJIA001 {
                     for (int i = 0; i < frm_height; ++i) {
                         frm_ptr[i] = new unsigned char[frm_width];
                         for (int j = 0; j < frm_width; ++j) {
-                            int pos = (round(x)+i)*img_width+(y+j); 
+                            int pos = (round(x)+i)*img_width+(y+j);
                             frm_ptr[i][j] = unsigned(img_arr[pos]);
                         }
                     }
@@ -122,7 +122,8 @@ namespace WNGJIA001 {
 
     FrameSequence::~FrameSequence() {
         // Clean up imageSequence
-        for(int i = 0; i < imageSequence.size(); ++i) {
+        int size = imageSequence.size();
+        for(int i = 0; i < size; ++i) {
             for(int row = 0; row < frm_height; ++row) {
 		        delete [] imageSequence[i][row];
                 // std::cout << "===== pointer pointing to imageSequence[" << i << "][" << row << "] deleted =====" << std::endl;

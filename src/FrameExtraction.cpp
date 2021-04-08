@@ -4,11 +4,12 @@
 * Author: WNGJIA001
 */
 
-#include <iostream> 
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
+#include <iomanip>
 
 #include "FrameExtraction.h"
 #include "FrameSequence.h"
@@ -20,7 +21,7 @@ namespace WNGJIA001 {
     void extractFrames() {
         // extract frames with given parameters (from CmdLineParser) and generate output pgm files
         char *img_arr; // pointer to char array which stores binary data from original pgm file
-        char *frm_arr; // pointer to char array which stores data of each frame imageSequence[i] from the frameSequence class 
+        char *frm_arr; // pointer to char array which stores data of each frame imageSequence[i] from the frameSequence class
         // open and read pgm file
         std::ifstream input_file(pgm_filename, std::ios::binary);
         if (input_file) {
@@ -30,7 +31,7 @@ namespace WNGJIA001 {
                 if (input_line == "P5") { continue; }
                 else if (input_line.at(0) == '#') { continue; }
                 else if (input_line == "255") { break; }
-                else { 
+                else {
                     std::istringstream line_ss(input_line);
                     line_ss >> img_width >> std::ws >> img_height >> std::ws;
                 }
@@ -48,7 +49,8 @@ namespace WNGJIA001 {
             delete [] img_arr;
 
             // write output pgm files for each w operation
-            for (int w_i = 0; w_i < w_ops.size(); ++w_i) {
+            int w_size = w_ops.size();
+            for (int w_i = 0; w_i < w_size; ++w_i) {
                 std::string w_op = w_ops[w_i];
                 std::string w_name = w_names[w_i];
                 for (int i = 0; i < frameSequence.getFrameCount(); ++i) {
@@ -70,7 +72,7 @@ namespace WNGJIA001 {
                                 int rev_i = (frameSequence.getFrameCount()-1) - i;
                                 unsigned char a = 255;
                                 frm_arr[pos] = a - frameSequence.getPixel(rev_i, row, col);
-                            } 
+                            }
                         }
                     }
                     // write to output file
@@ -78,7 +80,7 @@ namespace WNGJIA001 {
                     code_ss << std::setfill('0') << std::setw(4) << i;
                     std::string output_filename = "bin/" + w_name + "-" + code_ss.str() + ".pgm";
                     std::ofstream output_file(output_filename, std::ios_base::binary);
-                    output_file << "P5\n" << width << " " << height << "\n" <<  "255\n"; 
+                    output_file << "P5\n" << width << " " << height << "\n" <<  "255\n";
                     output_file.write(frm_arr, width*height);
                     output_file.close();
                     // clean up memory of each frame array pointer
