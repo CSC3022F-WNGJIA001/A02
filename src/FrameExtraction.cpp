@@ -64,12 +64,12 @@ namespace WNGJIA001 {
                                 unsigned char a = 255;
                                 frm_arr[pos] = a - frameSequence.getPixel(i, row, col);
                             } else if (w_op == "reverse") {
-                                pos = (width*height-1) - pos;
-                                frm_arr[pos] = frameSequence.getPixel(i, row, col);
+                                int rev_i = (frameSequence.getFrameCount()-1) - i;
+                                frm_arr[pos] = frameSequence.getPixel(rev_i, row, col);
                             } else if (w_op == "revinvert") {
-                                pos = (width*height-1) - pos;
+                                int rev_i = (frameSequence.getFrameCount()-1) - i;
                                 unsigned char a = 255;
-                                frm_arr[pos] = a - frameSequence.getPixel(i, row, col);
+                                frm_arr[pos] = a - frameSequence.getPixel(rev_i, row, col);
                             } 
                         }
                     }
