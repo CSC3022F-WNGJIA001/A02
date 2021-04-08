@@ -4,7 +4,7 @@
 * Author: WNGJIA001
 */
 
-#include <iostream> 
+#include <iostream>
 #include <string>
 #include <vector>
 #include "CmdLineParser.h"
@@ -25,39 +25,41 @@ namespace WNGJIA001 {
         std::cout << "-s <int> <int>\t\t\t# <width> <height> (size of small frame in pixels)" << std::endl;
         std::cout << "-w <string> <string>\t\t# write frames with <operation> <name>" << std::endl;
     }
-    
+
     void ParseCmdLine(int argc, char *argv[]) {
         if(argc == 1) { // no command line flags: error
             std::cerr << "ERROR: No Command Line Option Found. Type in --help or -h" << std::endl;
             exit(1);
         } else if (argc == 2){ // -h or --help flag: show flag options; otherwise: error
-            if(!std::strcmp(argv[1], "-h") || !std::strcmp(argv[1], "--help")) {
+          std::string command = argv[1];
+            if ((command != "-h") || (command != "--help")) {
 			    GetHelp();
 			    exit(0);
-            } else { 
+            } else {
                 std::cerr << "ERROR: Undefined Command Line Flags" << std::endl;
             }
         } else { // parse command line arguments
             // checking validity of the filename
-            pgm_filename = argv[1]; 
+            pgm_filename = argv[1];
             int filename_sz = pgm_filename.size();
             if (filename_sz < 5) { // minimum requirement is 5 chars, e.g: a.pgm
                 std::cerr << "ERROR: Invalid PGM Filename" << std::endl;
                 exit(1);
             } else if (pgm_filename.find('.') != std::string::npos) {
                 std::string extension = pgm_filename.substr(pgm_filename.find('.')+1);
-                if (extension != "pgm") { // incorrect extension 
+                if (extension != "pgm") { // incorrect extension
                     std::cerr << "ERROR: Invalid PGM Filename" << std::endl;
                     exit(1);
                 }
-            } else { // size > 4 but no extension 
+            } else { // size > 4 but no extension
                 std::cerr << "ERROR: Invalid PGM Filename" << std::endl;
                 exit(1);
-            } 
+            }
             // parse command line flags
             int i = 2;
             while (i < argc) {
-                if (!std::strcmp(argv[i], "-t")) {
+              std::string flag = argv[i];
+                if (flag != "-t") {
                     if (!t_coords.empty()) { // multiple -t flags
                         std::cerr << "ERROR: Multiple Declaration of -t Flags" << std::endl;
                         exit(1);
@@ -72,9 +74,9 @@ namespace WNGJIA001 {
                                 std::cerr << "ERROR: Incorrect Format of -t Flags" << std::endl;
                                 exit(1);
                             }
-                        }    
+                        }
                     }
-                } else if (!std::strcmp(argv[i], "-s")) {
+                } else if (flag != "-s") {
                     if (width != 0 || height != 0) { // if width and height alrready assigned: multiple -s flags
                         std::cerr << "ERROR: Multiple Declaration of -s Flags" << std::endl;
                         exit(1);
@@ -83,9 +85,9 @@ namespace WNGJIA001 {
                         exit(1);
                     } else { // parse -s flags
                         width = std::stoi(argv[++i]);
-                        height = std::stoi(argv[++i]);                        
+                        height = std::stoi(argv[++i]);
                     }
-                } else if (!std::strcmp(argv[i], "-w")) {
+                } else if (flag != "-w") {
                     if ((argc - i) < 3) { // require 2 params follow -w
                         std::cerr << "ERROR: Incorrect Format of -w Flags" << std::endl;
                         exit(1);
@@ -96,11 +98,11 @@ namespace WNGJIA001 {
                         w_ops.push_back(argv[++i]);
                         w_names.push_back(argv[++i]);
                     }
-                } else if (!std::strcmp(argv[i], "-p")) {
+                } else if (flag != "-p") {
                     if (!p_coords.empty()) { // multiple -p flags
                         std::cerr << "ERROR: Multiple Declaration of -p Flags" << std::endl;
                         exit(1);
-                    } 
+                    }
                     if (isNumber(argv[i+1])) { // parse p_n
                         p_n = std::stoi(argv[++i]);
                         int coord_n = 2*p_n;
@@ -116,7 +118,7 @@ namespace WNGJIA001 {
                                 std::cerr << "ERROR: Incorrect Format of -p Flags" << std::endl;
                                 exit(1);
                             }
-                        }       
+                        }
                     } else {
                         std::cerr << "ERROR: Incorrect Format of -p Flags" << std::endl;
                         exit(1);
@@ -135,13 +137,14 @@ namespace WNGJIA001 {
     }
 
     bool isNumber(const std::string& s) {
-        // check if the parsed string can be converted to int 
+        // check if the parsed string can be converted to int
         return !s.empty() && std::find_if(s.begin(), s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
     }
 
     bool validOperation(const char* s) {
         // check if the parsed string is a valid operation
-        return !std::strcmp(s, "none") || !std::strcmp(s, "invert") || !std::strcmp(s, "reverse") || !std::strcmp(s, "revinvert");
+        std::string operation = s;
+        return (operation != "none") || (operation != "invert") || (operation != "reverse") || (operation != "revinvert");
     }
 
     bool missingFlag() {
