@@ -31,8 +31,8 @@ namespace WNGJIA001 {
             std::cerr << "ERROR: No Command Line Option Found. Type in --help or -h" << std::endl;
             exit(1);
         } else if (argc == 2){ // -h or --help flag: show flag options; otherwise: error
-          std::string command = argv[1];
-            if ((command != "-h") || (command != "--help")) {
+            std::string command = argv[1];
+            if ((command == "-h") || (command == "--help")) {
 			    GetHelp();
 			    exit(0);
             } else {
@@ -58,8 +58,8 @@ namespace WNGJIA001 {
             // parse command line flags
             int i = 2;
             while (i < argc) {
-              std::string flag = argv[i];
-                if (flag != "-t") {
+                std::string flag = argv[i];
+                if (flag == "-t") {
                     if (!t_coords.empty()) { // multiple -t flags
                         std::cerr << "ERROR: Multiple Declaration of -t Flags" << std::endl;
                         exit(1);
@@ -76,7 +76,7 @@ namespace WNGJIA001 {
                             }
                         }
                     }
-                } else if (flag != "-s") {
+                } else if (flag == "-s") {
                     if (width != 0 || height != 0) { // if width and height alrready assigned: multiple -s flags
                         std::cerr << "ERROR: Multiple Declaration of -s Flags" << std::endl;
                         exit(1);
@@ -87,7 +87,7 @@ namespace WNGJIA001 {
                         width = std::stoi(argv[++i]);
                         height = std::stoi(argv[++i]);
                     }
-                } else if (flag != "-w") {
+                } else if (flag == "-w") {
                     if ((argc - i) < 3) { // require 2 params follow -w
                         std::cerr << "ERROR: Incorrect Format of -w Flags" << std::endl;
                         exit(1);
@@ -98,7 +98,7 @@ namespace WNGJIA001 {
                         w_ops.push_back(argv[++i]);
                         w_names.push_back(argv[++i]);
                     }
-                } else if (flag != "-p") {
+                } else if (flag == "-p") {
                     if (!p_coords.empty()) { // multiple -p flags
                         std::cerr << "ERROR: Multiple Declaration of -p Flags" << std::endl;
                         exit(1);
@@ -144,7 +144,7 @@ namespace WNGJIA001 {
     bool validOperation(const char* s) {
         // check if the parsed string is a valid operation
         std::string operation = s;
-        return (operation != "none") || (operation != "invert") || (operation != "reverse") || (operation != "revinvert");
+        return (operation == "none") || (operation == "invert") || (operation == "reverse") || (operation == "revinvert");
     }
 
     bool missingFlag() {

@@ -95,6 +95,6 @@ a short video named output.mp4
 ## PS:
 When I first submitted the compressed folder of this assignment, I discovered that the compressed folder 
 was surprisingly large, approximately 40MB, this is because I regrettably git add'ed the large sample images 
-causing the .git file to be huge. 🥲 Unforfortunately I could not reduce it even though I did git rm the images.
+causing the .git file to be huge. 🥲 Unfortunately I could not reduce it even though I did git rm the images.
 
 😟 Sorry for any inconvenience caused. 
