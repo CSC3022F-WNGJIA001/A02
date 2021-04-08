@@ -86,3 +86,9 @@ $ ffmpeg -r 25 -s 800x400 -i bin/sequence-%04d.pgm -vcodec libx264 -pix_fmt yuv4
 ```
 The above example will convert the pgm files of output frames named with the format sequence-%04d.pgm into 
 a short video named output.mp4 
+----------------------------------------------------------------------------------------------
+## PS
+When I first submitted the compressed folder of this assignment, I discovered that the compressed folder 
+was surprisingly large, approximately 40MB, this is because I regrettably git add'ed the large sample images 
+causing the .git file to be huge 🥲. Unforfortunately I could not reduce it even though I did git rm the images. 
+Sorry for any inconvenience caused 😟.
